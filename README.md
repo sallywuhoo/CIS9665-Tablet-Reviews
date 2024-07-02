@@ -11,9 +11,11 @@ Since there were many Amazon products in the dataset, we decided to only focus o
 
 # Downsampling
 An issue our team noticed with the dataset is that of the 12,691 reviews for the Amazon Fire Tablet, 95.1% recommend the product while the remaining 4.9% do not as you can see in the graph below:
+
 ![downsampling1](https://github.com/sallywuhoo/CIS9665-Tablet-Reviews/assets/148400043/797f70e1-a19e-49be-bcc9-3a9d5f5e9caa)
 
 The data was heavily skewed, thus we needed to apply downsampling methods to our dataset. To do so, I utilized the resample() function from the Pandas library to balance the number of reviews for the Fire Tablet that recommends it and the number of reviews that do not recommend it. This evened out the imbalance and the final dataset our team used for the analysis is a 50% split between the 2 types of reviews with 626 reviews each.
+
 ![downsampling2](https://github.com/sallywuhoo/CIS9665-Tablet-Reviews/assets/148400043/7ed31255-bc66-452e-b681-d38eff074fe9)
 
 # Data Exploration
@@ -23,6 +25,7 @@ To explore the reviews for the Fire Tablet, we used term frequency-inverse docum
 For our analysis, we needed to extract the necessary features; we chose sentiment analysis, review length, and TF-IDF to transform review text to predict desired response of either "recommended" or "not recommneded". Sentiment Analysis is the process of analyzing text to determine if the emotional tone of the message is positive, negative, or neautral; we extracted the polarity score of each review and used the compound score; the compound score is the normalized score of the positive and negative sentiments for each review. Review length is considered as a factor as well because according to studies done, they indicate review length is highly associated with review ratings. TF-IDF is also calculated for each word and obtained 2,802 unique words then utilized them as features. These set of feature engineering processes resulted in a total of 2,804 features extracted from our dataset.
 
 During the pre-modeling process, we wanted to simplify our significant number of features, so we utilized a random forest model. Using the RandomForestClassifier function from scikit-learn, we selected the top 10 most important features. These top 10 features now only include the following: compound, review length, "not", "great", "easy", "love", "slow", "tablet", "loves", "ok".
+
 ![top 10 words](https://github.com/sallywuhoo/CIS9665-Tablet-Reviews/assets/148400043/eefa18a2-a0bb-41b9-a815-d9888a6f8fad)
 
 The evaluation scores of this model were all reasonable high with an accuracy rate of 83% and precision, recall, and F1-scores all being close to or over 80% as well.
@@ -31,17 +34,21 @@ The evaluation scores of this model were all reasonable high with an accuracy ra
 For our project we explored modeling our dataset with Logistic Regression, Naive Bayes, and Decision Tree. We split our dataset into 2 parts: 90% training dataset and 10% testing dataset; this is done to ensure that the evaluations reflect how well the models will perform with unseen data. To train and test the models with upcoming statsmodels and scikit-learn libraries, we split the dataset into x and y, which created a total of 4 variables: x_test, x_train, y_test, and y_train. Each of the x variables consisted of all 10 selected feature columns and the y variables are derived from the "Reviews.doRecommend" column.
 
 For our logistic regression model, it revealed the association of each feature with the response through clear metrics. In this analysis, we employed the Logit() function to model the relationship. Below are the results:
+
 ![logreg results](https://github.com/sallywuhoo/CIS9665-Tablet-Reviews/assets/148400043/1cd28d0f-7f35-4be1-abca-bf8712855743)
 
 In this report, we can see that all 10 features selected are statistically significant with p-values all less than 5%. The coefficients indicate the correlation and considerable impact of each feature on the likelihood of a product being recommended or not.
 
 For the Naives Bayes model, I utilized the BernoulliNB() function from the scikit-learn library. It ran with our training dataset to predict the testing dataset and the model yieled an accuracy rate of 76.19%. Results. Below are the results:
+
 ![NB results](https://github.com/sallywuhoo/CIS9665-Tablet-Reviews/assets/148400043/19fc9196-e8af-49f1-939a-67dd39bd8c94)
 
 For the Decision Tree, I used the DecisionTreeClassifier() function from the scikit-learn library and limited the tree depth to 3 levels. It yielded an accuracy rate of 73%. Below are the results:
+
 ![DT results](https://github.com/sallywuhoo/CIS9665-Tablet-Reviews/assets/148400043/15683e90-b283-461c-969e-7e067cd7c04d)
 
 Here is also a look at the 3-level decision tree:
+
 ![DT](https://github.com/sallywuhoo/CIS9665-Tablet-Reviews/assets/148400043/be253843-2cbb-4e97-82ef-6edd061ea63e)
 
 There are 8 terminal nodes and reviews are classified as either "Recommnded" or "not recommended". It appears that the most notable independent variables that affect the prediciton results are the compound score and the review length. Taking a closer look at the first level, if a review has a compound score less than 0.44, it will continue down the branch to the left; if the review has a compound score greater than 0.44, it will continue to the right. At the second level to the left, if a review falls to this branch, the secondary decision made is based on the compound score again; so if the score is less than 0.254, it will continue to the left and if it has a value greater than that, it will continue to the right. On the second level to the right, if a review falls to this branch, the secondary decision made is based on the number of words in the review; so if the review has less than 52.5 words, it will continue to the left and if it has greater than 52.5 words, it will continue to the right. This trend continues down the branch until the final decisions are reached. Note that at this 3 level tree, words that impact the decisions include “love” and “easy” both on the third level.
