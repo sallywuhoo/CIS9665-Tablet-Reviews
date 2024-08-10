@@ -2,7 +2,7 @@
 For my CIS 9665 Applied Natural Language Processing graduate course, my group and I analyzed Amazon Fire Tablet reviews ranging from 2010-2017. My contributions to this project include cleaning and transforming the data, downsampling the skewed data, fitting the Bernoulli Naive Bayes classifier model, and fitting the Decision Tree model. Majority of this project we used the nltk library and sklearn library.
 
 # Introduction & Research Question
-For many online shoppers, the consumer reviews for products are a crucial part of their shopping journey; checkings reviews have become an integral part for shoppers to decide whether or not they will purchase a product based on previous buyer's recommendations. Our goal for this project was to understand whether keywords or features predict if a product like the Amazon Fire Tablet will be recommended or not? And if so, which keywords or features are the most influential?
+For many online shoppers, the consumer reviews for products are a crucial part of their shopping journey; checking reviews have become an integral part for shoppers to decide whether or not they will purchase a product based on previous buyer's recommendations. Our goal for this project was to understand whether keywords or features predict if a product like the Amazon Fire Tablet will be recommended or not? And if so, which keywords or features are the most influential?
 
 # Data Preprocessing
 The Amazon reviews are found on Kaggle as 3 separate CSV files. In total there are 67,992 customer reviews with 21-24 columns. After importing them to Jupyter Notebook and storing them in 3 separate dataframes, we dropped unneccesary columns for the purposes of this analysis and merged all 3 dataframes to 1 overarching dataframe. Additionally, we converted columns to strings and recoded columns. The next step in the preprocessing step was to clean the reviews text by lowercasing and dropping stopwords except for "not"/"no" which will be needed in the next data exploratory section.
@@ -14,7 +14,7 @@ An issue our team noticed with the dataset is that of the 12,691 reviews for the
 
 ![downsampling1](https://github.com/sallywuhoo/CIS9665-Tablet-Reviews/assets/148400043/797f70e1-a19e-49be-bcc9-3a9d5f5e9caa)
 
-The data was heavily skewed, thus we needed to apply downsampling methods to our dataset. To do so, I utilized the resample() function from the Pandas library to balance the number of reviews for the Fire Tablet that recommends it and the number of reviews that do not recommend it. This evened out the imbalance and the final dataset our team used for the analysis is a 50% split between the 2 types of reviews with 626 reviews each.
+The data was heavily skewed, thus we needed to apply downsampling methods to our dataset. To do so, I utilized the resample() function from the Pandas library to balance the number of reviews for the Fire Tablet that recommend it and the number of reviews that do not recommend it. This evened out the imbalance and the final dataset our team used for the analysis is a 50% split between the 2 types of reviews with 626 reviews each.
 
 ![downsampling2](https://github.com/sallywuhoo/CIS9665-Tablet-Reviews/assets/148400043/7ed31255-bc66-452e-b681-d38eff074fe9)
 
@@ -28,7 +28,7 @@ During the pre-modeling process, we wanted to simplify our significant number of
 
 ![top 10 words](https://github.com/sallywuhoo/CIS9665-Tablet-Reviews/assets/148400043/eefa18a2-a0bb-41b9-a815-d9888a6f8fad)
 
-The evaluation scores of this model were all reasonable high with an accuracy rate of 83% and precision, recall, and F1-scores all being close to or over 80% as well.
+The evaluation scores of this model were all reasonably high with an accuracy rate of 83% and precision, recall, and F1-scores all being close to or over 80% as well.
 
 # Data Modeling: Logistic Regression, Naive Bayes, and Decision Tree
 For our project we explored modeling our dataset with Logistic Regression, Naive Bayes, and Decision Tree. We split our dataset into 2 parts: 90% training dataset and 10% testing dataset; this is done to ensure that the evaluations reflect how well the models will perform with unseen data. To train and test the models with upcoming statsmodels and scikit-learn libraries, we split the dataset into x and y, which created a total of 4 variables: x_test, x_train, y_test, and y_train. Each of the x variables consisted of all 10 selected feature columns and the y variables are derived from the "Reviews.doRecommend" column.
